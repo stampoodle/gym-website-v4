@@ -1,0 +1,2314 @@
+/* ==========================================================================
+   GYM TRAINA — global styles
+   Everything is in one file for now. Sections are marked with comments.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Design tokens
+   Change a value here and it updates everywhere on the site.
+   -------------------------------------------------------------------------- */
+:root {
+  /* Colour */
+  --bg: #101315;
+  --bg-raised: #171b1e;
+  --bg-sunken: #0c0f11;
+  --line: #262d32;
+  --line-soft: #1d2327;
+  --text: #edf0f2;
+  --text-muted: #939da5;
+  --text-dim: #6d777e;
+  --chalk: #eef1f3; /* primary button fill */
+  --brass: #d3b475; /* retained for reference, unused — PRs now use --accent */
+  --accent: #3f7fe0; /* medium blue — the one accent colour in the app */
+  --accent-soft: rgba(63, 127, 224, 0.14);
+  --danger: #e08585;
+
+  /* App shell */
+  --sidenav-width: 232px;
+  --bottomnav-height: 64px;
+
+  /* Type */
+  --font-display: 'Anton', 'Arial Narrow', Impact, sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    Helvetica, Arial, sans-serif;
+
+  /* Spacing + shape */
+  --gutter: 24px;
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-pill: 999px;
+  --max-width: 1140px;
+}
+
+/* --------------------------------------------------------------------------
+   2. Reset and base
+   -------------------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+p,
+ul {
+  margin: 0;
+}
+
+ul {
+  padding: 0;
+  list-style: none;
+}
+
+svg {
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--chalk);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding-inline: var(--gutter);
+}
+
+/* --------------------------------------------------------------------------
+   3. Buttons
+   -------------------------------------------------------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: var(--radius-pill);
+  border: 1px solid transparent;
+  background-color: transparent;
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  letter-spacing: 0.005em;
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease,
+    transform 160ms ease;
+}
+
+.btn--lg {
+  padding: 14px 26px;
+  font-size: 1rem;
+}
+
+.btn--solid {
+  background-color: var(--chalk);
+  color: #0d1012;
+}
+
+.btn--solid:hover {
+  background-color: #ffffff;
+  transform: translateY(-1px);
+}
+
+.btn--outline {
+  border-color: var(--line);
+  color: var(--text);
+}
+
+.btn--outline:hover {
+  border-color: #3b444a;
+  background-color: var(--bg-raised);
+  transform: translateY(-1px);
+}
+
+.btn--ghost {
+  color: var(--text-muted);
+}
+
+.btn--ghost:hover {
+  color: var(--text);
+  background-color: var(--bg-raised);
+}
+
+/* --------------------------------------------------------------------------
+   4. Navigation
+   -------------------------------------------------------------------------- */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: rgba(16, 19, 21, 0.82);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.nav__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  height: 68px;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--text);
+}
+
+.logo__mark {
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.logo__word {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.nav__actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* --------------------------------------------------------------------------
+   5. Hero
+   -------------------------------------------------------------------------- */
+.hero {
+  position: relative;
+  padding-block: 88px 96px;
+  overflow: hidden;
+}
+
+/* A very soft pool of light behind the headline, nothing more. */
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -220px;
+  left: -140px;
+  width: 720px;
+  height: 560px;
+  background: radial-gradient(
+    closest-side,
+    rgba(122, 143, 158, 0.16),
+    rgba(122, 143, 158, 0)
+  );
+  pointer-events: none;
+}
+
+.hero__inner {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  align-items: center;
+  gap: 64px;
+}
+
+.hero__title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(2.75rem, 6.2vw, 4.5rem);
+  line-height: 0.98;
+  letter-spacing: -0.005em;
+}
+
+.hero__lede {
+  margin-top: 24px;
+  max-width: 52ch;
+  color: var(--text-muted);
+  font-size: 1.0625rem;
+  line-height: 1.7;
+}
+
+.hero__actions {
+  margin-top: 36px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* --------------------------------------------------------------------------
+   6. Sample log panel in the hero
+   -------------------------------------------------------------------------- */
+.log {
+  background-color: var(--bg-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 22px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+}
+
+.log__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.log__title {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  letter-spacing: 0.01em;
+}
+
+.log__date {
+  color: var(--text-dim);
+  font-size: 0.8125rem;
+}
+
+.log__block {
+  padding-top: 18px;
+}
+
+.log__exercise {
+  color: var(--text);
+  font-size: 0.9375rem;
+  font-weight: 500;
+}
+
+.log__sets {
+  margin-top: 8px;
+  display: grid;
+  gap: 2px;
+}
+
+.log__row {
+  display: grid;
+  grid-template-columns: 22px 1fr auto auto;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  background-color: var(--bg-sunken);
+  font-size: 0.875rem;
+}
+
+.log__num {
+  color: var(--text-dim);
+  font-variant-numeric: tabular-nums;
+}
+
+.log__weight {
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+
+.log__reps {
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.log__pr {
+  color: var(--accent);
+  background-color: rgba(211, 180, 117, 0.12);
+  border-radius: var(--radius-pill);
+  padding: 2px 10px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.log__foot {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line-soft);
+  display: flex;
+  gap: 20px;
+  color: var(--text-dim);
+  font-size: 0.8125rem;
+}
+
+/* --------------------------------------------------------------------------
+   7. Features
+   -------------------------------------------------------------------------- */
+.features {
+  padding-block: 40px 104px;
+  border-top: 1px solid var(--line-soft);
+}
+
+.features__heading {
+  padding-top: 64px;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.875rem, 3.4vw, 2.625rem);
+  line-height: 1.1;
+  max-width: 18ch;
+}
+
+.features__intro {
+  margin-top: 14px;
+  max-width: 50ch;
+  color: var(--text-muted);
+}
+
+.features__grid {
+  margin-top: 44px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.card {
+  background-color: var(--bg-raised);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-md);
+  padding: 26px 24px 28px;
+  transition:
+    border-color 180ms ease,
+    background-color 180ms ease;
+}
+
+.card:hover {
+  border-color: var(--line);
+  background-color: #191e21;
+}
+
+.card__icon {
+  display: inline-flex;
+  color: var(--text);
+  width: 26px;
+  height: 26px;
+}
+
+.card__icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.card__title {
+  margin-top: 18px;
+  font-size: 1.0625rem;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+}
+
+.card__body {
+  margin-top: 8px;
+  max-width: 44ch;
+  color: var(--text-muted);
+  font-size: 0.9375rem;
+}
+
+/* --------------------------------------------------------------------------
+   8. Footer
+   -------------------------------------------------------------------------- */
+.footer {
+  margin-top: auto;
+  border-top: 1px solid var(--line-soft);
+  padding-block: 28px;
+}
+
+.footer__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px 18px;
+  color: var(--text-dim);
+  font-size: 0.875rem;
+}
+
+.footer__brand {
+  font-family: var(--font-display);
+  font-size: 1.0625rem;
+  color: var(--text);
+}
+
+.footer__copy {
+  margin-left: auto;
+}
+
+/* --------------------------------------------------------------------------
+   9. Page load animation (one orchestrated reveal, then nothing)
+   -------------------------------------------------------------------------- */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.reveal {
+  opacity: 0;
+  animation: rise 620ms cubic-bezier(0.2, 0.7, 0.3, 1) forwards;
+}
+
+.reveal--1 {
+  animation-delay: 60ms;
+}
+.reveal--2 {
+  animation-delay: 160ms;
+}
+.reveal--3 {
+  animation-delay: 250ms;
+}
+.reveal--4 {
+  animation-delay: 340ms;
+}
+
+/* --------------------------------------------------------------------------
+   10. Responsive
+   -------------------------------------------------------------------------- */
+@media (max-width: 900px) {
+  .hero {
+    padding-block: 56px 72px;
+  }
+
+  .hero__inner {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 44px;
+  }
+
+  .features__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .features__heading {
+    padding-top: 48px;
+  }
+}
+
+@media (max-width: 560px) {
+  :root {
+    --gutter: 18px;
+  }
+
+  .nav__inner {
+    height: 62px;
+  }
+
+  .btn--ghost {
+    padding-inline: 12px;
+  }
+
+  .hero__actions .btn {
+    flex: 1 1 auto;
+  }
+
+  .log {
+    padding: 18px;
+  }
+
+  .footer__copy {
+    margin-left: 0;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   11. Respect reduced motion
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    animation: none;
+  }
+
+  * {
+    transition-duration: 1ms !important;
+  }
+}
+
+/* ==========================================================================
+   12. App shell (Dashboard / Workout / History / Progress / Profile)
+   ========================================================================== */
+
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+}
+
+.app-shell__content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.app-main {
+  width: 100%;
+  max-width: 640px;
+  padding: 32px 20px calc(48px + var(--bottomnav-height));
+}
+
+/* Sidebar — desktop only */
+.sidenav {
+  width: var(--sidenav-width);
+  flex-shrink: 0;
+  display: none;
+  flex-direction: column;
+  gap: 28px;
+  padding: 26px 18px;
+  border-right: 1px solid var(--line-soft);
+  position: sticky;
+  top: 0;
+  height: 100vh;
+}
+
+.sidenav__brand {
+  padding-left: 8px;
+}
+
+.sidenav__links {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sidenav__link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  transition:
+    background-color 150ms ease,
+    color 150ms ease;
+}
+
+.sidenav__link:hover {
+  color: var(--text);
+  background-color: var(--bg-raised);
+}
+
+.sidenav__link--active {
+  color: var(--text);
+  background-color: var(--accent-soft);
+}
+
+.sidenav__icon {
+  display: inline-flex;
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+}
+
+/* Bottom nav — mobile only */
+.bottomnav {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 20;
+  height: var(--bottomnav-height);
+  display: flex;
+  background-color: rgba(16, 19, 21, 0.92);
+  backdrop-filter: blur(14px);
+  border-top: 1px solid var(--line-soft);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+.bottomnav__link {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  color: var(--text-dim);
+  font-size: 0.6875rem;
+  font-weight: 500;
+}
+
+.bottomnav__icon {
+  display: inline-flex;
+  width: 22px;
+  height: 22px;
+}
+
+.bottomnav__link--active {
+  color: var(--text);
+}
+
+.bottomnav__link--active .bottomnav__icon {
+  color: var(--accent);
+}
+
+/* --------------------------------------------------------------------------
+   13. Shared page building blocks
+   -------------------------------------------------------------------------- */
+.page-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.page-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.page-head__eyebrow {
+  color: var(--text-dim);
+  font-size: 0.8125rem;
+}
+
+.page-head__title {
+  margin-top: 4px;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.5rem, 3.4vw, 1.875rem);
+  letter-spacing: 0.002em;
+}
+
+.stat-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+}
+
+.stat-card {
+  background-color: var(--bg-raised);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-md);
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.stat-card__value {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+}
+
+.stat-card__label {
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+}
+
+.section-block {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.section-block__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.section-block__head h2 {
+  font-size: 1.0625rem;
+  font-weight: 600;
+}
+
+.link-more {
+  color: var(--text-muted);
+  font-size: 0.875rem;
+}
+
+.link-more:hover {
+  color: var(--text);
+}
+
+.empty-note {
+  color: var(--text-dim);
+  font-size: 0.9375rem;
+  padding: 18px 0;
+}
+
+/* Workout list (Dashboard + History) */
+.workout-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.workout-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px;
+  background-color: var(--bg-raised);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-md);
+  transition: border-color 150ms ease;
+}
+
+.workout-row:hover {
+  border-color: var(--line);
+}
+
+.workout-row__name {
+  font-weight: 500;
+}
+
+.workout-row__meta {
+  margin-top: 2px;
+  color: var(--text-dim);
+  font-size: 0.8125rem;
+}
+
+.workout-row__stat {
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  font-variant-numeric: tabular-nums;
+  flex-shrink: 0;
+}
+
+/* PR list (Dashboard) */
+.pr-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pr-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px;
+  background-color: var(--bg-raised);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-md);
+}
+
+.pr-row__name {
+  font-weight: 500;
+}
+
+.pr-row__meta {
+  margin-top: 2px;
+  color: var(--text-dim);
+  font-size: 0.8125rem;
+}
+
+.pr-row__figures {
+  text-align: right;
+}
+
+.pr-row__weight {
+  display: block;
+  font-variant-numeric: tabular-nums;
+}
+
+.pr-row__est {
+  display: block;
+  margin-top: 2px;
+  color: var(--accent);
+  font-size: 0.75rem;
+}
+
+/* --------------------------------------------------------------------------
+   14. Inputs, buttons, chips shared across app pages
+   -------------------------------------------------------------------------- */
+.input {
+  width: 100%;
+  background-color: var(--bg-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  padding: 11px 14px;
+  transition: border-color 150ms ease;
+}
+
+.input:focus {
+  border-color: var(--accent);
+}
+
+.input--lg {
+  padding: 14px 16px;
+  font-size: 1.0625rem;
+}
+
+.input:disabled {
+  color: var(--text-dim);
+  cursor: not-allowed;
+}
+
+select.input {
+  appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, var(--text-dim) 50%),
+    linear-gradient(135deg, var(--text-dim) 50%, transparent 50%);
+  background-position:
+    calc(100% - 18px) center,
+    calc(100% - 13px) center;
+  background-size:
+    5px 5px,
+    5px 5px;
+  background-repeat: no-repeat;
+  padding-right: 34px;
+}
+
+.btn--full {
+  width: 100%;
+}
+
+.chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  padding: 7px 14px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--line);
+  background-color: transparent;
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+  cursor: pointer;
+}
+
+.chip--active {
+  border-color: var(--accent);
+  color: var(--text);
+  background-color: var(--accent-soft);
+}
+
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: var(--radius-sm);
+  border: none;
+  background-color: transparent;
+  color: var(--text-dim);
+  font-size: 0.8125rem;
+  cursor: pointer;
+}
+
+.icon-btn:hover {
+  color: var(--text);
+  background-color: var(--bg-sunken);
+}
+
+.icon-btn--ghost:hover {
+  color: var(--danger);
+}
+
+/* --------------------------------------------------------------------------
+   15. Start-workout screen
+   -------------------------------------------------------------------------- */
+.start-screen {
+  display: flex;
+  justify-content: center;
+  padding-top: 48px;
+}
+
+.start-screen__card {
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.start-screen__hint {
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  margin-top: -6px;
+}
+
+.start-screen__cta {
+  margin-top: 8px;
+}
+
+/* --------------------------------------------------------------------------
+   16. Active workout screen
+   -------------------------------------------------------------------------- */
+.workout-head {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.workout-head__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.workout-name-input {
+  flex: 1;
+  min-width: 0;
+  background: transparent;
+  border: none;
+  color: var(--text);
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  padding: 4px 0;
+}
+
+.workout-name-input:focus {
+  outline: none;
+  border-bottom: 1px solid var(--accent);
+}
+
+.workout-head__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.exercise-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.exercise-card {
+  background-color: var(--bg-raised);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-md);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.exercise-card__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.exercise-card__head h3 {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.exercise-card__previous {
+  margin-top: -6px;
+  color: var(--text-dim);
+  font-size: 0.8125rem;
+}
+
+.exercise-card__volume {
+  color: var(--text-dim);
+  font-size: 0.8125rem;
+}
+
+.set-table {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.set-table__row {
+  display: grid;
+  grid-template-columns: 26px 1fr 1fr 64px 30px;
+  align-items: center;
+  gap: 8px;
+}
+
+.set-table__row--readonly {
+  grid-template-columns: 26px 1fr 1fr 1fr;
+  padding: 6px 0;
+  font-size: 0.9375rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.set-table__row--head {
+  color: var(--text-dim);
+  font-size: 0.75rem;
+}
+
+.set-table__index {
+  color: var(--text-dim);
+  font-variant-numeric: tabular-nums;
+  font-size: 0.875rem;
+}
+
+.set-input {
+  width: 100%;
+  background-color: var(--bg-sunken);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-size: 0.9375rem;
+  font-variant-numeric: tabular-nums;
+  padding: 9px 10px;
+  text-align: center;
+}
+
+.set-input:focus {
+  border-color: var(--accent);
+}
+
+.set-input--narrow {
+  padding-inline: 4px;
+}
+
+/* --------------------------------------------------------------------------
+   17. Exercise picker modal
+   -------------------------------------------------------------------------- */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  background-color: rgba(6, 7, 8, 0.6);
+  backdrop-filter: blur(3px);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 0;
+}
+
+.modal {
+  width: 100%;
+  max-width: 480px;
+  max-height: 82vh;
+  background-color: var(--bg-raised);
+  border: 1px solid var(--line);
+  border-radius: 20px 20px 0 0;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  overflow: hidden;
+}
+
+.modal__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.modal__head h2 {
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.exercise-results {
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.exercise-result {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 12px 12px;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-size: 0.9375rem;
+  text-align: left;
+  cursor: pointer;
+}
+
+.exercise-result:hover {
+  background-color: var(--bg-sunken);
+}
+
+.exercise-result__category {
+  color: var(--text-dim);
+  font-size: 0.75rem;
+}
+
+/* --------------------------------------------------------------------------
+   18. Progress page — charts
+   -------------------------------------------------------------------------- */
+.pr-highlight {
+  display: flex;
+  gap: 24px;
+  padding: 16px 18px;
+  background-color: var(--accent-soft);
+  border: 1px solid rgba(124, 158, 255, 0.28);
+  border-radius: var(--radius-md);
+}
+
+.pr-highlight__label {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+.pr-highlight__value {
+  margin-top: 2px;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+}
+
+.chart-card {
+  background-color: var(--bg-raised);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-md);
+  padding: 18px;
+}
+
+.chart-card__title {
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  margin-bottom: 8px;
+}
+
+.chart-empty {
+  color: var(--text-dim);
+  font-size: 0.875rem;
+  padding: 24px 0;
+  text-align: center;
+}
+
+.linechart {
+  width: 100%;
+  height: 160px;
+  overflow: visible;
+}
+
+.linechart__area {
+  fill: var(--accent-soft);
+  stroke: none;
+}
+
+.linechart__line {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2;
+}
+
+.linechart__dot {
+  fill: var(--bg-raised);
+  stroke: var(--accent);
+  stroke-width: 2;
+}
+
+.linechart__value {
+  fill: var(--text);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+}
+
+.linechart__label {
+  fill: var(--text-dim);
+  font-size: 10px;
+}
+
+/* --------------------------------------------------------------------------
+   19. Profile page — forms
+   -------------------------------------------------------------------------- */
+.form-card {
+  background-color: var(--bg-raised);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-card--danger {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field--row {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.field__label {
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.field__hint {
+  color: var(--text-dim);
+  font-size: 0.8125rem;
+}
+
+.segmented {
+  display: inline-flex;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  padding: 3px;
+  gap: 2px;
+}
+
+.segmented__option {
+  padding: 6px 16px;
+  border-radius: var(--radius-pill);
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+  cursor: pointer;
+}
+
+.segmented__option--active {
+  background-color: var(--chalk);
+  color: #0d1012;
+}
+
+/* --------------------------------------------------------------------------
+   20. Responsive — app shell
+   -------------------------------------------------------------------------- */
+@media (min-width: 900px) {
+  .sidenav {
+    display: flex;
+  }
+
+  .bottomnav {
+    display: none;
+  }
+
+  .app-main {
+    padding-bottom: 48px;
+  }
+}
+
+@media (max-width: 560px) {
+  .set-table__row {
+    grid-template-columns: 20px 1fr 1fr 52px 26px;
+    gap: 6px;
+  }
+
+  .form-card--danger {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* ==========================================================================
+   21. Auth pages (Sign up / Log in)
+   ========================================================================== */
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+  padding: 48px 20px 64px;
+}
+
+.auth-logo {
+  color: var(--text);
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.auth-title {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-weight: 400;
+}
+
+.auth-subtitle {
+  margin-top: -8px;
+  color: var(--text-muted);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.auth-switch {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+}
+
+.auth-switch a {
+  color: var(--accent);
+}
+
+.input--error {
+  border-color: var(--danger);
+}
+
+.field__error {
+  color: var(--danger);
+  font-size: 0.8125rem;
+}
+
+.auth-placeholder {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  text-align: center;
+}
+
+.auth-placeholder__badge {
+  align-self: center;
+  background-color: var(--accent-soft);
+  color: var(--accent);
+  border-radius: var(--radius-pill);
+  padding: 5px 14px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.auth-placeholder h1 {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 400;
+}
+
+.auth-placeholder p {
+  color: var(--text-muted);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+}
+
+.auth-placeholder strong {
+  color: var(--text);
+}
+
+/* ==========================================================================
+   22. Dashboard extras — page head actions, accent stat card, quick actions
+   ========================================================================== */
+.page-head__actions {
+  display: flex;
+  gap: 8px;
+}
+
+.stat-card--accent {
+  border-color: rgba(63, 127, 224, 0.35);
+  background-color: var(--accent-soft);
+}
+
+.quick-actions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+}
+
+.quick-action {
+  background-color: var(--bg-raised);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  color: var(--text);
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 150ms ease;
+}
+
+.quick-action:hover {
+  border-color: var(--accent);
+}
+
+/* ==========================================================================
+   23. Muscle map
+   ========================================================================== */
+.muscle-map {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  max-width: 360px;
+}
+
+.muscle-map__figure {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.muscle-map__figure svg {
+  width: 100%;
+  max-width: 150px;
+}
+
+.muscle-map__caption {
+  color: var(--text-dim);
+  font-size: 0.75rem;
+}
+
+.muscle-map__neutral {
+  fill: var(--bg-sunken);
+  stroke: var(--line);
+  stroke-width: 1;
+}
+
+.muscle--cold {
+  fill: #2a3238;
+  stroke: var(--line);
+  stroke-width: 1;
+  transition: fill 200ms ease;
+}
+
+.muscle--warm {
+  fill: rgba(63, 127, 224, 0.45);
+  stroke: var(--accent);
+  stroke-width: 1;
+  transition: fill 200ms ease;
+}
+
+.muscle--hot {
+  fill: var(--accent);
+  stroke: var(--accent);
+  stroke-width: 1;
+  transition: fill 200ms ease;
+}
+
+.muscle-map__legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 4px;
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+}
+
+.muscle-map__legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.legend-dot {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+}
+
+.legend-dot--hot {
+  background-color: var(--accent);
+}
+
+.legend-dot--warm {
+  background-color: rgba(63, 127, 224, 0.45);
+}
+
+.legend-dot--cold {
+  background-color: #2a3238;
+}
+
+/* ==========================================================================
+   24. Log Workout form
+   ========================================================================== */
+.log-form-head {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 12px;
+}
+
+.log-form-foot {
+  position: sticky;
+  bottom: calc(var(--bottomnav-height) + 12px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background-color: var(--bg-raised);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+}
+
+.log-form-foot__summary {
+  color: var(--text-muted);
+  font-size: 0.875rem;
+}
+
+@media (min-width: 900px) {
+  .log-form-foot {
+    position: static;
+  }
+}
+
+@media (max-width: 560px) {
+  .log-form-head {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================================
+   25. History filters
+   ========================================================================== */
+.history-filters {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.history-filters__dates {
+  display: flex;
+  gap: 10px;
+}
+
+.history-filters__dates .field {
+  flex: 1;
+}
+
+/* ==========================================================================
+   26. Progress — frequency list + PR timeline
+   ========================================================================== */
+.freq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.freq-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(60px, 2fr) auto;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.875rem;
+}
+
+.freq-row__bar {
+  display: block;
+  height: 6px;
+  border-radius: var(--radius-pill);
+  background-color: var(--bg-sunken);
+  overflow: hidden;
+}
+
+.freq-row__fill {
+  display: block;
+  height: 100%;
+  background-color: var(--accent);
+  border-radius: var(--radius-pill);
+}
+
+.freq-row__count {
+  color: var(--text-dim);
+  font-size: 0.8125rem;
+  white-space: nowrap;
+}
+
+.pr-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pr-timeline li {
+  display: grid;
+  grid-template-columns: 60px 1fr auto;
+  gap: 10px;
+  font-size: 0.875rem;
+  align-items: center;
+}
+
+.pr-timeline__date {
+  color: var(--text-dim);
+  font-size: 0.8125rem;
+}
+
+.pr-timeline__value {
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+  font-size: 0.8125rem;
+}
+
+/* ==========================================================================
+   27. Exercise library + exercise detail history table
+   ========================================================================== */
+.exercise-library-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.exercise-library-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 13px 16px;
+  background-color: var(--bg-raised);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-sm);
+  font-size: 0.9375rem;
+}
+
+.exercise-library-row:hover {
+  border-color: var(--line);
+}
+
+.exercise-library-row__meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.exercise-library-row__trained {
+  background-color: var(--accent-soft);
+  color: var(--accent);
+  border-radius: var(--radius-pill);
+  padding: 2px 10px;
+  font-size: 0.6875rem;
+  font-weight: 500;
+}
+
+.exercise-library-row__category {
+  color: var(--text-dim);
+  font-size: 0.75rem;
+}
+
+.history-table {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.history-table__row {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr 0.7fr 0.6fr 1fr;
+  gap: 8px;
+  padding: 10px 4px;
+  font-size: 0.875rem;
+  font-variant-numeric: tabular-nums;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.history-table__row--head {
+  color: var(--text-dim);
+  font-size: 0.75rem;
+  font-variant-numeric: initial;
+}
+
+/* ==========================================================================
+   28. Calendar
+   ========================================================================== */
+.calendar {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.calendar__weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  color: var(--text-dim);
+  font-size: 0.75rem;
+}
+
+.calendar__grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+
+.calendar__cell {
+  position: relative;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  background-color: var(--bg-raised);
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+}
+
+.calendar__cell--blank {
+  background: transparent;
+  cursor: default;
+  pointer-events: none;
+}
+
+.calendar__cell--logged {
+  background-color: var(--accent-soft);
+  color: var(--text);
+  border-color: rgba(63, 127, 224, 0.35);
+}
+
+.calendar__cell--selected {
+  border-color: var(--accent);
+}
+
+.calendar__pr-dot {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--accent);
+}
+
+.calendar-exercise-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+}
+
+/* ==========================================================================
+   29. Achievements
+   ========================================================================== */
+.achievement-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 12px;
+}
+
+.achievement-badge {
+  background-color: var(--bg-raised);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  opacity: 0.5;
+}
+
+.achievement-badge--unlocked {
+  opacity: 1;
+  border-color: rgba(63, 127, 224, 0.35);
+  background-color: var(--accent-soft);
+}
+
+.achievement-badge__icon {
+  font-size: 1.125rem;
+}
+
+.achievement-badge__title {
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.achievement-badge__description {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  line-height: 1.4;
+}
+
+/* ==========================================================================
+   30. Mobile "More" menu
+   ========================================================================== */
+.more-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.more-menu__row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  background-color: var(--bg-raised);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-md);
+  color: var(--text);
+  font-size: 0.9375rem;
+  font-weight: 500;
+}
+
+.more-menu__icon {
+  display: inline-flex;
+  width: 22px;
+  height: 22px;
+  color: var(--text-muted);
+}
+
+/* ==========================================================================
+   31. Profile note
+   ========================================================================== */
+.profile-note {
+  color: var(--text-dim);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  margin-top: -14px;
+}
+
+
+/* ==========================================================================
+   33. Colour system — blue stays the primary accent; additional colours are
+   used only where they carry meaning (success, milestones, rarity, PRs).
+   ========================================================================== */
+:root {
+  --green: #3fbf8a;
+  --green-soft: rgba(63, 191, 138, 0.14);
+  --gold: #e0b252;
+  --gold-soft: rgba(224, 178, 82, 0.14);
+  --purple: #9b7be8;
+  --orange: #e8893a;
+  --red: #e0566a;
+
+  --rarity-common: #9aa5ad;
+  --rarity-uncommon: #3fbf8a;
+  --rarity-rare: #4f93f5;
+  --rarity-epic: #9b7be8;
+  --rarity-legendary: #e8893a;
+  --rarity-mythic: #e0566a;
+}
+
+/* Colour-coded information */
+.stat-card:nth-child(1) .stat-card__value { color: var(--accent); }
+.stat-card:nth-child(3) .stat-card__value { color: var(--green); }
+.pr-row__est { color: var(--gold); }
+.pr-row { border-left: 3px solid var(--gold); }
+.pr-timeline__value { color: var(--gold); }
+.pr-highlight { background-color: var(--gold-soft); border-color: rgba(224, 178, 82, 0.3); }
+.pr-highlight__value { color: var(--gold); }
+.calendar__pr-dot { background-color: var(--gold); }
+.btn--solid { background-color: var(--accent); color: #fff; }
+.btn--solid:hover { background-color: #5a93ea; }
+.btn--solid:disabled { background-color: #2a3038; color: var(--text-dim); cursor: not-allowed; transform: none; }
+.sidenav__link--active { color: #fff; box-shadow: inset 3px 0 0 var(--accent); }
+.workout-row:hover, .exercise-library-row:hover { border-color: rgba(63, 127, 224, 0.5); }
+.linechart__line { stroke: var(--accent); }
+.legend-dot--hot { background-color: var(--accent); }
+
+/* Meter (progress bar) */
+.meter {
+  height: 7px;
+  border-radius: var(--radius-pill);
+  background-color: var(--bg-sunken);
+  overflow: hidden;
+}
+.meter--lg { height: 10px; }
+.meter__fill {
+  display: block;
+  height: 100%;
+  border-radius: var(--radius-pill);
+  background: linear-gradient(90deg, #2f6fd0, var(--accent));
+  transition: width 400ms ease;
+}
+
+/* ==========================================================================
+   34. Rank badge, Home rank line, Profile rank card + path
+   ========================================================================== */
+.rank-badge { display: inline-flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.rank-badge svg { display: block; filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.45)); }
+.rank-badge__label { font-size: 0.8125rem; font-weight: 500; }
+
+.home-rank { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
+.home-rank__name { font-size: 0.875rem; font-weight: 600; }
+.home-rank__xp { color: var(--text-dim); font-size: 0.8125rem; }
+
+.rank-card {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  padding: 22px;
+  background-color: var(--bg-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+}
+.rank-card__body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
+.rank-card__name { color: var(--text-muted); font-size: 0.875rem; }
+.rank-card__rank { font-family: var(--font-display); font-size: 1.75rem; line-height: 1.1; }
+.rank-card__xp { color: var(--gold); font-weight: 600; font-size: 0.9375rem; }
+.rank-card__next, .rank-card__meta { color: var(--text-muted); font-size: 0.8125rem; }
+.rank-card__complete { color: var(--purple); font-weight: 600; letter-spacing: 0.08em; font-size: 0.8125rem; }
+
+.rank-path { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.rank-path__step {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  padding: 12px 6px;
+  background-color: var(--bg-raised);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-sm);
+  opacity: 0.5;
+  text-align: center;
+}
+.rank-path__step--reached { opacity: 1; }
+.rank-path__step--current { border-color: var(--accent); background-color: var(--accent-soft); }
+.rank-path__step--locked { opacity: 0.4; filter: grayscale(0.6); }
+.rank-path__name { font-size: 0.8125rem; font-weight: 600; }
+.rank-path__req { color: var(--text-dim); font-size: 0.6875rem; }
+
+/* ==========================================================================
+   35. Achievements page
+   ========================================================================== */
+.ach-dashboard {
+  display: flex; gap: 22px; align-items: center;
+  padding: 22px;
+  background-color: var(--bg-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+}
+.ach-dashboard__rank { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+.ach-dashboard__rank-name { font-family: var(--font-display); font-size: 1.25rem; }
+.ach-dashboard__xp { color: var(--gold); font-size: 0.8125rem; font-weight: 600; }
+.ach-dashboard__main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px; }
+.ach-dashboard__meta { color: var(--text-muted); font-size: 0.8125rem; }
+.ach-note { margin-top: 0; }
+
+.ach-categories { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; }
+.ach-category-chip {
+  display: flex; justify-content: space-between; gap: 8px;
+  padding: 10px 12px;
+  background-color: var(--bg-raised);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-sm);
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+}
+.ach-category-chip strong { color: var(--text); font-variant-numeric: tabular-nums; }
+
+.ach-filters { display: flex; flex-direction: column; gap: 10px; }
+.chip--rarity-uncommon.chip--active { border-color: var(--rarity-uncommon); background-color: var(--green-soft); }
+.chip--rarity-rare.chip--active { border-color: var(--rarity-rare); }
+.chip--rarity-epic.chip--active { border-color: var(--rarity-epic); background-color: rgba(155, 123, 232, 0.15); }
+.chip--rarity-legendary.chip--active { border-color: var(--rarity-legendary); background-color: rgba(232, 137, 58, 0.15); }
+.chip--rarity-mythic.chip--active { border-color: var(--rarity-mythic); background-color: rgba(224, 86, 106, 0.15); }
+
+.ach-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }
+.ach-card {
+  --rc: var(--rarity-common);
+  position: relative;
+  display: flex; flex-direction: column; gap: 8px;
+  padding: 16px;
+  background-color: var(--bg-raised);
+  border: 1px solid var(--line-soft);
+  border-top: 3px solid var(--rc);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+.ach-card--uncommon { --rc: var(--rarity-uncommon); }
+.ach-card--rare { --rc: var(--rarity-rare); }
+.ach-card--epic { --rc: var(--rarity-epic); border-width: 1px 1px 1px 1px; border-top-width: 3px; }
+.ach-card--legendary { --rc: var(--rarity-legendary); border-color: rgba(232, 137, 58, 0.45); }
+.ach-card--mythic { --rc: var(--rarity-mythic); border-color: rgba(224, 86, 106, 0.55); }
+.ach-card:not(.ach-card--unlocked) .ach-card__name,
+.ach-card:not(.ach-card--unlocked) .ach-card__desc { opacity: 0.85; }
+.ach-card--unlocked { background-image: linear-gradient(180deg, color-mix(in srgb, var(--rc) 14%, transparent), transparent 70%); }
+.ach-card--epic.ach-card--unlocked, .ach-card--legendary.ach-card--unlocked, .ach-card--mythic.ach-card--unlocked {
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--rc) 40%, transparent), 0 6px 22px color-mix(in srgb, var(--rc) 18%, transparent);
+}
+.ach-card--mythic.ach-card--unlocked::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(115deg, transparent 40%, rgba(255, 255, 255, 0.08) 50%, transparent 60%);
+  background-size: 250% 100%;
+  animation: shimmer 4s linear infinite;
+}
+.ach-card__top { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.ach-card__rarity { color: var(--rc); font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+.ach-card__xp { color: var(--gold); font-size: 0.75rem; font-weight: 600; }
+.ach-card__name { font-size: 0.9375rem; font-weight: 600; }
+.ach-card__desc { color: var(--text-muted); font-size: 0.8125rem; line-height: 1.45; }
+.ach-card__progress-text { font-size: 0.8125rem; font-variant-numeric: tabular-nums; }
+.ach-card__remaining { color: var(--text-dim); font-size: 0.75rem; }
+.ach-card__unlocked { color: var(--green); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.04em; }
+.ach-card__unlocked span { color: var(--text-dim); font-weight: 400; letter-spacing: 0; }
+.ach-card .meter__fill { background: var(--rc); }
+
+@keyframes shimmer { from { background-position: 150% 0; } to { background-position: -100% 0; } }
+
+/* Closest achievements (Home) */
+.closest-list { display: flex; flex-direction: column; gap: 8px; }
+.closest-row {
+  display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(60px, 1.6fr) auto; align-items: center; gap: 12px;
+  padding: 12px 14px;
+  background-color: var(--bg-raised);
+  border: 1px solid var(--line-soft);
+  border-left: 3px solid var(--rarity-common);
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
+}
+.closest-row--uncommon { border-left-color: var(--rarity-uncommon); }
+.closest-row--rare { border-left-color: var(--rarity-rare); }
+.closest-row--epic { border-left-color: var(--rarity-epic); }
+.closest-row--legendary { border-left-color: var(--rarity-legendary); }
+.closest-row--mythic { border-left-color: var(--rarity-mythic); }
+.closest-row__pct { color: var(--text-muted); font-size: 0.8125rem; font-variant-numeric: tabular-nums; }
+
+/* ==========================================================================
+   36. Achievement unlock modal — intensity scales with rarity
+   ========================================================================== */
+.unlock-modal-backdrop {
+  position: fixed; inset: 0; z-index: 60;
+  display: flex; align-items: center; justify-content: center;
+  padding: 20px;
+  background-color: rgba(6, 7, 8, 0.72);
+  animation: fadeIn 220ms ease;
+}
+.unlock-modal {
+  --rc: var(--rarity-common);
+  position: relative;
+  width: 100%; max-width: 380px;
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  padding: 32px 24px 24px;
+  text-align: center;
+  background-color: var(--bg-raised);
+  border: 1px solid var(--rc);
+  border-radius: 20px;
+  overflow: hidden;
+  animation: popIn 320ms cubic-bezier(0.2, 0.9, 0.3, 1.2);
+}
+.unlock-modal--uncommon { --rc: var(--rarity-uncommon); }
+.unlock-modal--rare { --rc: var(--rarity-rare); box-shadow: 0 0 30px color-mix(in srgb, var(--rc) 25%, transparent); }
+.unlock-modal--epic { --rc: var(--rarity-epic); box-shadow: 0 0 44px color-mix(in srgb, var(--rc) 35%, transparent); animation: popIn 380ms cubic-bezier(0.2, 0.9, 0.3, 1.3); }
+.unlock-modal--legendary { --rc: var(--rarity-legendary); box-shadow: 0 0 60px color-mix(in srgb, var(--rc) 45%, transparent); animation: popIn 450ms cubic-bezier(0.2, 0.9, 0.3, 1.4), pulseGlow 2.4s ease-in-out infinite 450ms; }
+.unlock-modal--mythic {
+  --rc: var(--rarity-mythic);
+  max-width: 420px;
+  box-shadow: 0 0 80px color-mix(in srgb, var(--rc) 55%, transparent);
+  animation: popIn 520ms cubic-bezier(0.2, 0.9, 0.3, 1.4), pulseGlow 2s ease-in-out infinite 520ms;
+}
+.unlock-modal__glow { position: absolute; inset: 0; pointer-events: none; opacity: 0; }
+.unlock-modal--epic .unlock-modal__glow,
+.unlock-modal--legendary .unlock-modal__glow,
+.unlock-modal--mythic .unlock-modal__glow {
+  opacity: 1;
+  background: radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--rc) 35%, transparent), transparent 65%);
+}
+.unlock-modal--mythic .unlock-modal__glow::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(115deg, transparent 40%, rgba(255, 255, 255, 0.1) 50%, transparent 60%);
+  background-size: 250% 100%;
+  animation: shimmer 3s linear infinite;
+}
+.unlock-modal__trophy { position: relative; font-size: 2.5rem; line-height: 1; animation: trophyBounce 700ms ease 150ms both; }
+.unlock-modal--legendary .unlock-modal__trophy, .unlock-modal--mythic .unlock-modal__trophy { font-size: 3.25rem; }
+.unlock-modal__eyebrow { position: relative; color: var(--text-muted); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; }
+.unlock-modal__rarity { position: relative; color: var(--rc); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
+.unlock-modal__name { position: relative; font-family: var(--font-display); font-weight: 400; font-size: 1.75rem; letter-spacing: 0.03em; text-transform: uppercase; }
+.unlock-modal__desc { position: relative; color: var(--text-muted); font-size: 0.9375rem; }
+.unlock-modal__xp { position: relative; color: var(--gold); font-size: 1.125rem; font-weight: 700; margin: 6px 0 10px; }
+.unlock-modal__counter { position: relative; color: var(--text-dim); font-size: 0.75rem; }
+.unlock-modal .btn { position: relative; }
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes popIn { from { opacity: 0; transform: translateY(14px) scale(0.92); } to { opacity: 1; transform: none; } }
+@keyframes trophyBounce { 0% { transform: scale(0.4) rotate(-12deg); } 60% { transform: scale(1.15) rotate(6deg); } 100% { transform: scale(1) rotate(0); } }
+@keyframes pulseGlow { 0%, 100% { filter: brightness(1); } 50% { filter: brightness(1.12); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .unlock-modal, .unlock-modal__trophy, .ach-card--mythic.ach-card--unlocked::after, .unlock-modal__glow::after { animation: none !important; }
+}
+
+/* ==========================================================================
+   37. Muscle map (detailed)
+   ========================================================================== */
+.mm { display: grid; grid-template-columns: minmax(0, 260px) minmax(0, 1fr); gap: 24px; align-items: start; }
+.mm__figure-col { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.mm__view-toggle { align-self: center; }
+.mm__stage { position: relative; width: 100%; max-width: 240px; aspect-ratio: 198 / 410; }
+.mm__layer {
+  position: absolute; inset: 0;
+  opacity: 0; transform: scale(0.97); pointer-events: none;
+  transition: opacity 280ms ease, transform 280ms ease;
+}
+.mm__layer--active { opacity: 1; transform: none; pointer-events: auto; }
+.mm-svg { width: 100%; height: 100%; }
+
+.mm-base circle, .mm-base path { fill: #161b1f; stroke: var(--line); stroke-width: 1; }
+.mm-region path { stroke: #0c0f11; stroke-width: 1.2; stroke-linejoin: round; transition: fill 200ms ease; cursor: pointer; }
+.mm-region:focus { outline: none; }
+.mm-region--selected path { stroke: #fff; stroke-width: 1.6; }
+.mm-region:hover path { stroke: rgba(255, 255, 255, 0.7); }
+.mm-level-0 path, i.mm-level-0 { fill: #252c33; background-color: #252c33; }
+.mm-level-1 path, i.mm-level-1 { fill: #274a82; background-color: #274a82; }
+.mm-level-2 path, i.mm-level-2 { fill: #2f66b8; background-color: #2f66b8; }
+.mm-level-3 path, i.mm-level-3 { fill: #3f7fe0; background-color: #3f7fe0; }
+.mm-level-4 path, i.mm-level-4 { fill: #6aa6ff; background-color: #6aa6ff; }
+
+.mm__legend { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 12px; color: var(--text-dim); font-size: 0.6875rem; }
+.mm__legend span { display: inline-flex; align-items: center; gap: 5px; }
+.mm-dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; }
+
+.mm__side { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+.mm__info {
+  min-height: 150px;
+  padding: 16px;
+  background-color: var(--bg-raised);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-md);
+}
+.mm__hint { color: var(--text-dim); font-size: 0.875rem; }
+.mm__info-title { font-family: var(--font-display); font-size: 1.125rem; letter-spacing: 0.03em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
+.mm__info-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.mm__info-grid dt, .mm__summary dt { color: var(--text-dim); font-size: 0.6875rem; text-transform: uppercase; letter-spacing: 0.06em; }
+.mm__info-grid dd { margin: 2px 0 0; font-size: 0.9375rem; font-weight: 600; font-variant-numeric: tabular-nums; }
+.mm__info-sub { margin-top: 12px; color: var(--text-dim); font-size: 0.6875rem; text-transform: uppercase; letter-spacing: 0.06em; }
+.mm__info-list { margin-top: 4px; display: flex; flex-direction: column; gap: 2px; font-size: 0.8125rem; color: var(--text-muted); }
+
+.mm__summary { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin: 0; }
+.mm__summary > div { padding: 12px 14px; background-color: var(--bg-raised); border: 1px solid var(--line-soft); border-radius: var(--radius-sm); }
+.mm__summary dd { margin: 3px 0 0; font-size: 0.875rem; font-weight: 600; }
+.mm__summary > div:nth-child(1) dd { color: var(--accent); }
+.mm__summary > div:nth-child(2) dd { color: var(--green); }
+.mm__summary > div:nth-child(3) dd { color: var(--orange); }
+.mm__summary > div:nth-child(4) dd { color: var(--text); }
+
+@media (max-width: 720px) {
+  .mm { grid-template-columns: minmax(0, 1fr); }
+  .mm__stage { max-width: 210px; }
+  .rank-card { flex-direction: column; align-items: flex-start; }
+  .ach-dashboard { flex-direction: column; align-items: flex-start; }
+  .rank-path { grid-template-columns: repeat(3, 1fr); }
+}
+
+
+/* ==========================================================================
+   38. "Add" action buttons (Add set / Add exercise / Save workout)
+   Medium-blue fill with white text, readable before any hover. Contrast:
+   rest ~4.9:1, hover ~6:1, active ~7.5:1, disabled ~6:1 (all vs. text).
+   ========================================================================== */
+.btn--add {
+  background-color: #2d6bd1;
+  border-color: #2d6bd1;
+  color: #ffffff;
+}
+.btn--add:hover {
+  background-color: #255fc0;
+  border-color: #255fc0;
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+.btn--add:active {
+  background-color: #1f4fa3;
+  border-color: #1f4fa3;
+  color: #ffffff;
+  transform: none;
+}
+.btn--add:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 3px;
+  box-shadow: 0 0 0 5px rgba(45, 107, 209, 0.45);
+}
+.btn--add:disabled,
+.btn--add:disabled:hover {
+  background-color: #27303a;
+  border-color: #27303a;
+  color: #aab3bd;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ==========================================================================
+   39. Chart tooltips (hover / tap / arrow keys)
+   ========================================================================== */
+.linechart-wrap {
+  position: relative;
+  -webkit-tap-highlight-color: transparent;
+}
+.linechart-wrap--interactive {
+  cursor: crosshair;
+  touch-action: pan-y; /* vertical page scroll still works on touch */
+}
+.linechart-wrap:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+  border-radius: 6px;
+}
+.linechart__guide {
+  stroke: rgba(255, 255, 255, 0.25);
+  stroke-width: 1;
+  stroke-dasharray: 3 3;
+}
+.linechart__dot--active {
+  fill: #ffffff;
+  stroke: var(--accent);
+  stroke-width: 2.5;
+}
+.chart-tooltip {
+  position: absolute;
+  z-index: 5;
+  min-width: 128px;
+  max-width: 220px;
+  padding: 9px 12px;
+  background-color: #1b2229;
+  border: 1px solid #3a4651;
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.55);
+  transform: translate(-50%, calc(-100% - 12px));
+  pointer-events: none;
+  white-space: nowrap;
+}
+.chart-tooltip--below {
+  transform: translate(-50%, 14px);
+}
+.chart-tooltip__date {
+  color: #ffffff;
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+.chart-tooltip__value {
+  margin-top: 2px;
+  color: #8fb8ff;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.chart-tooltip__detail {
+  margin-top: 2px;
+  color: #b4bec7;
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+}
